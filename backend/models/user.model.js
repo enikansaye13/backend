@@ -10,6 +10,22 @@ username:{
     unique: true,
     trim: true,
     minlength:3
+},
+email:{
+    type: String,
+    require:true,
+    unique: true,
+    trim: true
+    
+},
+password:{
+    type: String,
+    require:true,
+
+},
+register_date: {
+type:Date,
+default: Date.now
 }
 }, {
 timestamps:true,

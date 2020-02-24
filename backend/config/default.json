@@ -1,0 +1,7 @@
+{
+    "mongoURI":"mongodb+srv://backend12345:backend12345@backend7-sz5qe.mongodb.net/test?retryWrites=true",
+    "jwtSecret": "sl_myjwtSecret",
+
+    "googleClientID": "387201182768-cdv181mct4ppr60sm4cji8etnn642n0g.apps.googleusercontent.com",
+    "googleClientSecret": "TnIPsFtP67VElf4mFPtCYeZm"
+}

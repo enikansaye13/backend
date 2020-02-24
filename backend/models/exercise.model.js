@@ -5,7 +5,7 @@ const exerciseSchema = new Schema({
     username: {type: String, required: true},
     clientid: {type: Number, required: true},
     incident: {type: String, required: true},
-    date: {type: Date, required: true},
+    date: {type: Date, default: Date.now},
     time: {type: Number && String, required: true},
     status: {type: String, required: true},
     description: {type: String, required: true}, 
