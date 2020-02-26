@@ -13,14 +13,14 @@ router.route("/").get((req, res) => {
 
 // router.route("/add").post( auth, (req, res) => {
 router.post("/add", auth, (req, res) => {
-  // const username = req.body.username;
-  // const clientid = req.body.clientid;
+  const username = req.body.username;
+  const clientid = req.body.clientid;
   const incident = req.body.incident;
-  // const date = Date.parse(req.body.date);
-  // const time = req.body.time;
-  // const status = req.body.status;
-  // const description = req.body.description;
-  // const duration = Number(req.body.duration);
+  const date = Date.parse(req.body.date);
+   const time = req.body.time;
+  const status = req.body.status;
+  const description = req.body.description;
+  const duration = Number(req.body.duration);
 
   const newExercise = new Exercise({
     username,

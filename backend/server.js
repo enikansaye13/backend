@@ -16,13 +16,16 @@ require('./services/login')
 const config = require("config")
 
 const User = require('./models/user.model')
+const Profile = require('./models/profile.model')
 // const User = mongoose.models("user")
 
 require("dotenv").config();
 
 const exercisesRouter = require("./routes/exercises");
 const usersRouter = require("./routes/users");
+const profileRouter = require("./routes/profile");
 const authRouter = require("./routes/auth");
+
 
 const app = express();
 
@@ -71,6 +74,7 @@ connection.once("open", () => {
 
 app.use("/exercises", exercisesRouter);
 app.use("/users", usersRouter);
+app.use("/profile", profileRouter);
 app.use("/auth", authRouter);
 
 app.listen(port, () => {
