@@ -29,14 +29,14 @@ router.route("/").get((req, res) => {
     if (user) {
       return res.status(400).json({ msg: "User already exist" });
     }
-  });
 
-  const newUser = new User({
-    username,
-    email,
-    password
-  });
-  // create salt and hash
+      const newUser = new User({
+        username,
+        email,
+        password
+      });
+    
+    // create salt and hash
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, (err, hash) => {
       if (err) throw err;
@@ -64,6 +64,10 @@ router.route("/").get((req, res) => {
     });
   });
 
+  });
+
+  
+  
   // newUser.save()
   // .then(() => res.json ('User added!'))
   // .catch(err => res.status(400).json('Error: ' + err));

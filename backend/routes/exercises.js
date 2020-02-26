@@ -17,9 +17,10 @@ router.post("/add", auth, (req, res) => {
   const clientid = req.body.clientid;
   const incident = req.body.incident;
   const date = Date.parse(req.body.date);
-   const time = req.body.time;
+  const time = req.body.time;
   const status = req.body.status;
   const description = req.body.description;
+  const location = req.body.description
   const duration = Number(req.body.duration);
 
   const newExercise = new Exercise({
@@ -30,6 +31,7 @@ router.post("/add", auth, (req, res) => {
     time,
     status,
     description,
+    location,
     duration
   });
 
@@ -63,6 +65,7 @@ router.post("/update/:id", auth, (req, res) => {
       exercise.time = req.body.time;
       exercise.status = req.body.status;
       exercise.description = req.body.description;
+      exercise.location = req.body.location;
       exercise.duration = Number(req.body.duration);
 
       exercise

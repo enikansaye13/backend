@@ -29,33 +29,36 @@ router.route("/").get((req, res) => {
     if (!user) {
       return res.status(400).json({ msg: "User does not exist" });
     }
-  });
 
-  // validate password
-  bcrypt.compare(password, user.password).then(isMatch => {
-    if (!isMatch) return res.status(400).json({ msg: "invalid credentials" });
+// validate password
+bcrypt.compare(password, user.password).then(isMatch => {
+  if (!isMatch) return res.status(400).json({ msg: "invalid credentials" });
 
 
-    jwt.sign(
-      { id: user.id },
-      config.get("jwtSecret"),
-      { expiresIn: 3600 },
-      (err, token) => {
-        if (err) throw err;
-        res.json(user
-          // {
-          // token,
-          // user: {
-          //   id: user.id,
-          //   username: user.username,
-          //   email: user.email
-          // }
+  jwt.sign(
+    { id: user.id },
+    config.get("jwtSecret"),
+    { expiresIn: 3600 },
+    (err, token) => {
+      if (err) throw err;
+      res.json(user
+        // {
+        // token,
+        // user: {
+        //   id: user.id,
+        //   username: user.username,
+        //   email: user.email
         // }
-        );
-      }
-    );
+      // }
+      );
+    }
+  );
+});
+
+    
   });
 
+  
 
 });
 // post/api users/auth
