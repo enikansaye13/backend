@@ -11,21 +11,41 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error:" + err));
 });
 
+// connecting user exercise to user
+router.get("/myinfo", auth, async (req, res) => {
+  try {
+    const Exercise = await Exercise.findOne({
+      user: req.user.id
+    }).populate("user");
+
+    if (!Exercise) {
+      return res
+        .status(400)
+        .json({ msg: "There is no exercise for this user" });
+    }
+
+    res.json(Exercise);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error....");
+  }
+});
+
 // router.route("/add").post( auth, (req, res) => {
 router.post("/add", auth, (req, res) => {
   const username = req.body.username;
-  const clientid = req.body.clientid;
+  const caseid = req.body.caseid;
   const incident = req.body.incident;
   const date = Date.parse(req.body.date);
   const time = req.body.time;
   const status = req.body.status;
   const description = req.body.description;
-  const location = req.body.description
+  const location = req.body.description;
   const duration = Number(req.body.duration);
 
   const newExercise = new Exercise({
     username,
-    clientid,
+    caseid,
     incident,
     date,
     time,
@@ -59,10 +79,12 @@ router.post("/update/:id", auth, (req, res) => {
   Exercise.findById(req.params.id)
     .then(exercise => {
       exercise.username = req.body.username;
-      exercise.clientid = req.body.clientid;
+      exercise.caseid = req.body.caseid;
       exercise.incident = req.body.incident;
-      exercise.date = Date.parse(req.body.date);
-      exercise.time = req.body.time;
+      // exercise.date = Date.parse(req.body.date);
+      // exercise.time = req.body.time;
+      exercise.register_date = Date.parse(req.body.register_date);
+
       exercise.status = req.body.status;
       exercise.description = req.body.description;
       exercise.location = req.body.location;

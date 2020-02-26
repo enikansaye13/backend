@@ -12,6 +12,7 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error:" + err));
 });
 
+// linking userprofile to the user
 router.get("/myinfo", auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({
