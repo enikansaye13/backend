@@ -4,12 +4,10 @@ const Schema = mongoose.Schema;
 const profileSchema = new Schema({
     // googleId: String
 
-    username: {
-        type: String,
-        require: true,
-        unique: true,
-        trim: true,
-        minlength: 3
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User"
+        
     },
     firstname: {
         type: String,
