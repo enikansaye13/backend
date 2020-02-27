@@ -8,7 +8,8 @@ const exerciseSchema = new Schema(
       ref: "User"
     },
     username: { type: String, required: true },
-    caseid: user._id,
+    caseid: {},
+    // User._id,
     incident: { type: String, required: true },
     // date: { type: Date, default: Date.now },
     // time: { type: Number && String, required: true },
