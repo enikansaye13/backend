@@ -9,11 +9,19 @@ let User = require("../models/user.model");
 
 // get/api users
 // register new  users
+// router.get('/', (res,req) =>{
 router.route("/").get((req, res) => {
   User.find()
-    .then(users => res.json(users))
+    .then(user => res.json(user))
     .catch(err => res.status(400).json("Error: " + err));
 });
+router.get('/:_id',(req, res) =>{
+// router.route("/:id").get((req, res) => {
+  User.findById(req.params.id)
+    .then(users => res.json(users))
+    .catch(err => res.status(400).json("Error:" + err));
+});
+
 
 // router.route("/add").post((req, res) => {
   router.post('/add', (req, res) => {
@@ -48,15 +56,15 @@ router.route("/").get((req, res) => {
           { expiresIn: 3600 },
           (err, token) => {
             if (err) throw err;
-            res.json(user
-            //   {
-            //  token,
-            //   user: {
-            //     id: user.id,
-            //     username: user.username,
-            //     email: user.email
-            //   }
-            // }
+            res.json(
+              {
+             token,
+              user: {
+                id: user.id,
+                username: user.username,
+                email: user.email
+              }
+            }
             );
           }
         );

@@ -17,6 +17,9 @@ const config = require("config")
 
 const User = require('./models/user.model')
 const Profile = require('./models/profile.model')
+const Subscriber = require('./models/subscriber.model')
+const Message = require('./models/message.model')
+
 // const User = mongoose.models("user")
 
 require("dotenv").config();
@@ -25,6 +28,8 @@ const exercisesRouter = require("./routes/exercises");
 const usersRouter = require("./routes/users");
 const profileRouter = require("./routes/profile");
 const authRouter = require("./routes/auth");
+const subscribersRouter = require("./routes/subscribers");
+const messageRouter = require("./routes/message");
 
 
 const app = express();
@@ -76,6 +81,8 @@ app.use("/exercises", exercisesRouter);
 app.use("/users", usersRouter);
 app.use("/profile", profileRouter);
 app.use("/auth", authRouter);
+app.use("/message", messageRouter);
+app.use("/subscribers", subscribersRouter);
 
 app.listen(port, () => {
   console.log(`server is running on port: ${port}`);

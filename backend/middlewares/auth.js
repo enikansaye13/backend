@@ -10,6 +10,7 @@ function auth(req, res, next){
     });
 
     try {
+        // verified token
         const decoded = jwt.verify(token, config.get('jwtSecret'));
         //add user from payload
         req.user = decoded;

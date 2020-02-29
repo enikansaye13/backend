@@ -74,18 +74,19 @@ router.post("/update/:id", (req, res) => {
       profile.username = req.body.username;
       profile.lasttname = req.body.lastname;
       profile.phonenumber = req.body.phonenumber;
-      profile.email = req.body.email,
-      profile.picture = req.body.picture
-    
-        .save()
-        .then(() => res.json("Profile updated!"))
-        .catch(err => res.status(400).json("Error: " + err));
+      (profile.email = req.body.email),
+        (profile.picture = req.body.picture
+
+          .save()
+          .then(() => res.json("Profile updated!"))
+          .catch(err => res.status(400).json("Error: " + err)));
     })
     .catch(err => res.status(400).json("Error:" + err));
 });
+
 // uploading image with multer
 const upload = multer();
-router.post("/uploadphoto", upload.single("avatar"), (req, res) => {
+router.post("/uploadphoto", upload.single("picture"), (req, res) => {
   var img = fs.readFileSync(req.file.path);
   var encode_image = img.toString("base64");
   // Define a JSONobject for the image attributes for saving to database
@@ -94,7 +95,7 @@ router.post("/uploadphoto", upload.single("avatar"), (req, res) => {
     contentType: req.file.mimetype,
     image: new Buffer(encode_image, "base64")
   };
-  db.collection("quotes").insertOne(finalImg, (err, result) => {
+  connection.collection("profile").insertOne(finalImg, (err, result) => {
     console.log(result);
 
     if (err) return console.log(err);
@@ -105,7 +106,7 @@ router.post("/uploadphoto", upload.single("avatar"), (req, res) => {
 });
 // retrieving the image to the front end
 router.get("/photos", (req, res) => {
-  db.collection("mycollection")
+  db.collection("profile")
     .find()
     .toArray((err, result) => {
       const imgArray = result.map(element => element._id);
@@ -119,7 +120,7 @@ router.get("/photos", (req, res) => {
 router.get("/photo/:id", (req, res) => {
   var filename = req.params.id;
 
-  db.collection("mycollection").findOne(
+  db.collection("profile").findOne(
     { _id: ObjectId(filename) },
     (err, result) => {
       if (err) return console.log(err);
