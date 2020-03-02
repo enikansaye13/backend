@@ -1,7 +1,9 @@
 const express = require("express");
 const router = require("express").Router();
 const auth = require("../middlewares/auth");
-const multer = require("multer");
+// const multer = require("multer");
+const cloudinary = require('cloudinary').v2;
+
 
 // item model
 const Profile = require("../models/profile.model");
@@ -84,50 +86,50 @@ router.post("/update/:id", (req, res) => {
     .catch(err => res.status(400).json("Error:" + err));
 });
 
-// uploading image with multer
-const upload = multer();
-router.post("/uploadphoto", upload.single("picture"), (req, res) => {
-  var img = fs.readFileSync(req.file.path);
-  var encode_image = img.toString("base64");
-  // Define a JSONobject for the image attributes for saving to database
+// // uploading image with multer
+// const upload = multer();
+// router.post("/uploadphoto", upload.single("picture"), (req, res) => {
+//   var img = fs.readFileSync(req.file.path);
+//   var encode_image = img.toString("base64");
+//   // Define a JSONobject for the image attributes for saving to database
 
-  var finalImg = {
-    contentType: req.file.mimetype,
-    image: new Buffer(encode_image, "base64")
-  };
-  connection.collection("profile").insertOne(finalImg, (err, result) => {
-    console.log(result);
+//   var finalImg = {
+//     contentType: req.file.mimetype,
+//     image: new Buffer(encode_image, "base64")
+//   };
+//   connection.collection("profile").insertOne(finalImg, (err, result) => {
+//     console.log(result);
 
-    if (err) return console.log(err);
+//     if (err) return console.log(err);
 
-    console.log("saved to database");
-    res.redirect("/");
-  });
-});
-// retrieving the image to the front end
-router.get("/photos", (req, res) => {
-  db.collection("profile")
-    .find()
-    .toArray((err, result) => {
-      const imgArray = result.map(element => element._id);
-      console.log(imgArray);
+//     console.log("saved to database");
+//     res.redirect("/");
+//   });
+// });
+// // retrieving the image to the front end
+// router.get("/photos", (req, res) => {
+//   db.collection("profile")
+//     .find()
+//     .toArray((err, result) => {
+//       const imgArray = result.map(element => element._id);
+//       console.log(imgArray);
 
-      if (err) return console.log(err);
-      res.send(imgArray);
-    });
-});
-// passing id
-router.get("/photo/:id", (req, res) => {
-  var filename = req.params.id;
+//       if (err) return console.log(err);
+//       res.send(imgArray);
+//     });
+// });
+// // passing id
+// router.get("/photo/:id", (req, res) => {
+//   var filename = req.params.id;
 
-  db.collection("profile").findOne(
-    { _id: ObjectId(filename) },
-    (err, result) => {
-      if (err) return console.log(err);
+//   db.collection("profile").findOne(
+//     { _id: ObjectId(filename) },
+//     (err, result) => {
+//       if (err) return console.log(err);
 
-      res.contentType("image");
-      res.send(result.image.buffer);
-    }
-  );
-});
+//       res.contentType("image");
+//       res.send(result.image.buffer);
+//     }
+//   );
+// });
 module.exports = router;
